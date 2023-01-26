@@ -17,6 +17,10 @@ mongoose.connection.on(
 // create express application
 const app = express();
 
+// use cors
+const cors = require("cors");
+app.use(cors());
+
 // define port
 const port = 3000;
 

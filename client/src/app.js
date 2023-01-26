@@ -27,7 +27,18 @@ const App = () => {
 
   return (
     <div className="App bg-light">
-      <h1 className="container-fluid bg-light shadow-sm p-3 mb-3">Inventory</h1>
+      <div className="container-fluid bg-light shadow-sm mb-3 p-3">
+        <div className="row align-items-center">
+          <div className="col">
+            <h1>Inventory</h1>
+          </div>
+          <div className="col-auto">
+            <button className="btn btn-dark">
+              <i className="bi-plus-lg"></i> New Item
+            </button>
+          </div>
+        </div>
+      </div>
 
       <div className="container-fluid">
         {items.length > 0 ? (

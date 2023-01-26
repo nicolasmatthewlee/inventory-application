@@ -34,17 +34,17 @@ const App = () => {
           <table className="table table-striped table-bordered table-hover m-0 bg-white shadow-sm">
             <thead>
               <tr>
-                {Object.keys(items[0]).map((n) => (
-                  <th key={n}>{n}</th>
-                ))}
+                {Object.keys(items[0]).map((n) =>
+                  n !== "_id" ? <th key={n}>{n}</th> : null
+                )}
               </tr>
             </thead>
             <tbody>
               {items.map((i) => (
                 <tr key={i._id} onClick={() => goToItem(i._id)}>
-                  {Object.keys(i).map((n) => (
-                    <td key={n}>{i[n]}</td>
-                  ))}
+                  {Object.keys(i).map((n) =>
+                    n !== "_id" ? <td key={n}>{i[n]}</td> : null
+                  )}
                 </tr>
               ))}
             </tbody>

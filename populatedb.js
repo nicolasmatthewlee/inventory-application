@@ -42,21 +42,77 @@ const createItem = (name, description, category, price, count, callback) => {
   });
 };
 
-// RESUME HERE!!! CREATE ACTUAL INSTANCES
 // create items
 const items = [
   {
     name: "Snow in Mukojima",
-    description: "woodblock print",
+    description: "20th century woodblock print by Hasui Kawase.",
     category: "japanese",
     price: 200,
     count: 3,
   },
   {
     name: "Honmon-ji Temple in Ikegami",
-    description: "woodblock print",
+    description: "20th century woodblock print by Hasui Kawase.",
     category: "japanese",
     price: 100,
+    count: 2,
+  },
+  {
+    name: "Kiyosu Bridge",
+    description: "20th century woodblock print by Hasui Kawase.",
+    category: "japanese",
+    price: 80,
+    count: 2,
+  },
+  {
+    name: "Meguro Fudō Temple",
+    description: "20th century woodblock print by Hasui Kawase.",
+    category: "japanese",
+    price: 30,
+    count: 2,
+  },
+  {
+    name: " Snow in the Front of the Shrine",
+    description: "20th century woodblock print by Hasui Kawase.",
+    category: "japanese",
+    price: 40,
+    count: 2,
+  },
+  {
+    name: "Spring Night at Inokashira Park",
+    description: "20th century woodblock print by Hasui Kawase.",
+    category: "japanese",
+    price: 100,
+    count: 2,
+  },
+  {
+    name: "Chūzenji, Utagahama",
+    description: "20th century woodblock print by Hasui Kawase.",
+    category: "japanese",
+    price: 110,
+    count: 2,
+  },
+  {
+    name: "Morning at Cape Inubō",
+    description: "20th century woodblock print by Hasui Kawase.",
+    category: "japanese",
+    price: 100,
+    count: 2,
+  },
+  {
+    name: "Nagoya Castle",
+    description:
+      "20th century woodblock print by Hasui Kawase, from the series Selected Views of the Tôkaidô Road.",
+    category: "japanese",
+    price: 190,
+    count: 2,
+  },
+  {
+    name: " Snow at Sekiguchi",
+    description: "20th century woodblock print by Hasui Kawase.",
+    category: "japanese",
+    price: 80,
     count: 2,
   },
 ];

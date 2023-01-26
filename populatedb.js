@@ -1,6 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const mongoose = require("mongoose");
+const async = require("async");
 
 // import model
 const Item = require("./models/item");
@@ -24,15 +25,20 @@ mongoose.connection.on("error", (err) => console.error(err));
 
 // populate MongoDB database
 
-const createItem = (name, description, category, price, count) => {
+const createItem = (name, description, category, price, count, callback) => {
   // create new item and save to collection
   const item = new Item({ name, description, category, price, count });
 
   // save item to collection
   item.save((err) => {
-    if (err) return console.log(err);
+    if (err) {
+      console.log(err);
+      callback(err, null);
+      return;
+    }
     // saved
     console.log("New Item: " + item);
+    callback(null, name);
   });
 };
 
@@ -55,12 +61,10 @@ const items = [
   },
 ];
 
-items.map((i) =>
-  createItem(i.name, i.description, i.category, i.price, i.count)
+saveItems = items.map(
+  (i) => (callback) =>
+    createItem(i.name, i.description, i.category, i.price, i.count, callback)
 );
 
-// disconnect from database
-// mongoose.connection.close();
-
-// commented out for now because must occur after items.map complete,
-// which is an async process
+// saveItems and close connection
+async.parallel(saveItems, () => mongoose.connection.close());

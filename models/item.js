@@ -14,4 +14,7 @@ const itemSchema = new Schema({
 
 // convert schema into a model that can be worked with
 // mongoose.model(modelName, schema)
+// the modelName is the name of the collection your model is for
+// mongoose looks for the plural, lowercase version of your model name
+// ex) 'Tank' model -> 'tanks' collection
 module.exports = mongoose.model("Item", itemSchema);

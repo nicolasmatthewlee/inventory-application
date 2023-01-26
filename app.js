@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
 // next() function
 // ex) if (err) next(err)
 app.get("/api", (req, res, next) => {
-  Item.find().exec((err, items) => {
+  Item.find({}, { __v: 0 }).exec((err, items) => {
     if (err) return next(err);
     // no error
     res.send(items);

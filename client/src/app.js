@@ -4,6 +4,8 @@ import "bootstrap";
 
 import { useEffect, useState } from "react";
 
+import { AddItemModal } from "./components/add-item-modal";
+
 const App = () => {
   const loadItems = async () => {
     try {
@@ -27,6 +29,9 @@ const App = () => {
 
   return (
     <div className="App bg-light">
+      {/* overlay */}
+      <div className="w-100 h-100 bg-dark opacity-50 position-fixed"></div>
+
       <div className="container-fluid bg-light shadow-sm mb-3 p-3">
         <div className="row align-items-center">
           <div className="col">
@@ -39,6 +44,8 @@ const App = () => {
           </div>
         </div>
       </div>
+
+      <AddItemModal />
 
       <div className="container-fluid">
         {items.length > 0 ? (

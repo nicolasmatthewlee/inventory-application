@@ -58,6 +58,14 @@ app.get("/api/categories", (req, res, next) => {
   });
 });
 
+app.get("/api/item/:id", (req, res, next) => {
+  Item.findById(req.params.id, { __v: 0 }).exec((err, result) => {
+    if (err) return next(err);
+    // no error
+    res.json(result);
+  });
+});
+
 app.post("/api/create", [
   body("name")
     .trim()

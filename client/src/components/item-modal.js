@@ -18,7 +18,7 @@ export const ItemModal = (props) => {
       }
     } else {
       try {
-        const itemData = await fetch(`${props.server}/item/${props.item}`);
+        const itemData = await fetch(`${props.server}/api/item/${props.item}`);
         const itemJSON = await itemData.json();
         console.log(itemJSON);
       } catch (err) {

@@ -62,6 +62,7 @@ export const AddItemModal = (props) => {
                 className="form-control"
                 placeholder="Name"
                 required
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className="mb-2">
@@ -74,13 +75,19 @@ export const AddItemModal = (props) => {
                 rows="3"
                 className="form-control"
                 placeholder="Item description..."
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
             <div className="mb-2">
               <label htmlFor="category" className="form-label mb-1">
                 Category
               </label>
-              <select id="category" className="form-select">
+              <select
+                id="category"
+                className="form-select"
+                required
+                onChange={(e) => setCategory(e.target.value)}
+              >
                 {categories.map((c) => (
                   <option key={c}>{c}</option>
                 ))}
@@ -95,10 +102,15 @@ export const AddItemModal = (props) => {
                   <div className="input-group">
                     <div className="input-group-text">$</div>
                     <input
-                      type="text"
+                      type="number"
                       id="price"
                       className="form-control"
                       placeholder="0.00"
+                      onChange={(e) => setPrice(e.target.value)}
+                      min="0"
+                      style={{
+                        MozAppearance: "textfield",
+                      }}
                     />
                   </div>
                 </div>
@@ -109,10 +121,12 @@ export const AddItemModal = (props) => {
                     Quantity
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     id="quantity"
                     className="form-control"
                     placeholder="1"
+                    onChange={(e) => setQuantity(e.target.value)}
+                    min="0"
                   />
                 </div>
               </div>

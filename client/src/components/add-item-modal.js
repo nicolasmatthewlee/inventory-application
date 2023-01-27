@@ -25,7 +25,10 @@ export const AddItemModal = (props) => {
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
+  const [loading, setLoading] = useState(false);
+
   const postForm = async (name, description, category, price, quantity) => {
+    setLoading(true);
     try {
       const response = await fetch(`${props.server}/api/create`, {
         method: "POST",
@@ -39,6 +42,7 @@ export const AddItemModal = (props) => {
     } catch (err) {
       console.log(err);
     }
+    setLoading(false);
   };
 
   const onSubmit = (e) => {
@@ -149,7 +153,14 @@ export const AddItemModal = (props) => {
             </div>
 
             <button type="submit" className="btn btn-dark w-100">
-              Submit
+              {loading ? (
+                <div>
+                  <i className="spinner-border spinner-border-sm"></i>{" "}
+                  Loading...
+                </div>
+              ) : (
+                "Submit"
+              )}
             </button>
           </form>
         </div>

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { AddItemModal } from "./components/add-item-modal";
 
 const App = () => {
+  const [items, setItems] = useState([]);
   const loadItems = async () => {
     try {
       const itemsData = await fetch("http://localhost:3000/api");
@@ -16,12 +17,11 @@ const App = () => {
       console.log(err);
     }
   };
-
   useEffect(() => {
     loadItems();
   }, []);
 
-  const [items, setItems] = useState([]);
+  const [showItemModal, setShowItemModal] = useState(false);
 
   const goToItem = (id) => {
     console.log(id);
@@ -29,8 +29,16 @@ const App = () => {
 
   return (
     <div className="App bg-light">
-      {/* overlay */}
-      <div className="w-100 h-100 bg-dark opacity-50 position-fixed"></div>
+      {showItemModal ? (
+        <div>
+          {/* overlay */}
+          <div
+            onClick={() => setShowItemModal(false)}
+            className="zindex-modal-backdrop w-100 h-100 bg-dark opacity-50 position-fixed"
+          ></div>
+          <AddItemModal onClose={() => setShowItemModal(false)} />
+        </div>
+      ) : null}
 
       <div className="container-fluid bg-light shadow-sm mb-3 p-3">
         <div className="row align-items-center">
@@ -38,14 +46,15 @@ const App = () => {
             <h1>Inventory</h1>
           </div>
           <div className="col-auto">
-            <button className="btn btn-dark">
+            <button
+              className="btn btn-dark"
+              onClick={() => setShowItemModal(true)}
+            >
               <i className="bi-plus-lg"></i> New Item
             </button>
           </div>
         </div>
       </div>
-
-      <AddItemModal />
 
       <div className="container-fluid">
         {items.length > 0 ? (

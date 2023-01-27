@@ -1,4 +1,6 @@
-export const AddItemModal = () => {
+import CLOSE_ICON from "../assets/close.svg";
+
+export const AddItemModal = (props) => {
   return (
     <div
       className="position-fixed top-0 w-100 zindex-modal d-flex justify-content-center"
@@ -6,9 +8,19 @@ export const AddItemModal = () => {
     >
       <div className="card col-10">
         <div className="card-body p-3">
-          <h2>
-            <i className="bi-database-fill-add"></i> Add item
-          </h2>
+          <div className="row">
+            <div className="col">
+              <h2>
+                <i className="bi-database-fill-add"></i> Add item
+              </h2>
+            </div>
+            <div className="col-auto p-0">
+              <button className="btn p-0 me-2" onClick={props.onClose}>
+                <img src={CLOSE_ICON} alt="close" style={{ width: "30px" }} />
+              </button>
+            </div>
+          </div>
+
           <form action="">
             <div className="mb-2">
               <label className="form-label mb-1">Name</label>

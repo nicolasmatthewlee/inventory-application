@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CLOSE_ICON from "../assets/close.svg";
+import uniqid from "uniqid";
 
 export const AddItemModal = (props) => {
   const [categories, setCategories] = useState([]);
@@ -26,6 +27,7 @@ export const AddItemModal = (props) => {
   const [quantity, setQuantity] = useState(1);
 
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const postForm = async (name, description, category, price, quantity) => {
     setLoading(true);
@@ -38,9 +40,16 @@ export const AddItemModal = (props) => {
         },
         body: JSON.stringify({ name, description, category, price, quantity }),
       });
-      console.log(response);
+      const responseJSON = await response.json();
+
+      // set errors
+      if (responseJSON.errors) setErrors(responseJSON.errors);
+      else setErrors([]);
+
+      if (responseJSON.success === true) props.onClose();
+      else throw Error;
     } catch (err) {
-      console.log(err);
+      setErrors([{ msg: "An unknown error occured." }]);
     }
     setLoading(false);
   };
@@ -151,6 +160,20 @@ export const AddItemModal = (props) => {
                 </div>
               </div>
             </div>
+
+            {errors.length > 0 ? (
+              <div className="container-fluid list-group p-0  mb-3">
+                <li className="list-group-item list-group-item-danger m-0">
+                  <ul className="m-0 ps-3">
+                    {errors.map((e) => (
+                      <li className="" key={uniqid()}>
+                        {e.msg}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              </div>
+            ) : null}
 
             <button type="submit" className="btn btn-dark w-100">
               {loading ? (

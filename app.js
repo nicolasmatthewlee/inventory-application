@@ -59,9 +59,46 @@ app.get("/api/categories", (req, res, next) => {
 });
 
 app.post("/api/create", [
+  body("name")
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage("Name must be specified.")
+    .isLength({ max: 100 })
+    .withMessage("Name must not exceed 100 characters.")
+    .escape(),
+  body("description")
+    .trim()
+    .isLength({ max: 500 })
+    .withMessage("Description must not exceed 100 characters.")
+    .escape(),
+  body("category")
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage("Category must be specified.")
+    .escape(),
+  body("price")
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage("Price must be specified.")
+    .isNumeric()
+    .withMessage("Price must be a number.")
+    .escape(),
+  body("quantity")
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage("Quantity must be specified.")
+    .isNumeric()
+    .withMessage("Quantity must be a number.")
+    .escape(),
   (req, res, next) => {
-    console.log(req.body);
-    res.send("success");
+    // get validation result
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      // there are validation errors
+      return res.json({ success: false, errors: errors.array() });
+    }
+    // no validation errors
+    res.json({ success: true });
   },
 ]);
 

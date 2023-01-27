@@ -41,6 +41,7 @@ const App = () => {
           <AddItemModal
             server={server}
             onClose={() => setShowItemModal(false)}
+            onSave={loadItems}
           />
         </div>
       ) : null}

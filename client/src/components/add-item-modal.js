@@ -46,8 +46,10 @@ export const AddItemModal = (props) => {
       if (responseJSON.errors) setErrors(responseJSON.errors);
       else setErrors([]);
 
-      if (responseJSON.success === true) props.onClose();
-      else throw Error;
+      if (responseJSON.success === true) {
+        props.onClose();
+        props.onSave();
+      } else throw Error;
     } catch (err) {
       setErrors([{ msg: "An unknown error occured." }]);
     }

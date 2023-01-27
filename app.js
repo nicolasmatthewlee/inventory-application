@@ -3,6 +3,7 @@ dotenv.config();
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
+const { body, validationResult } = require("express-validator");
 
 const Item = require("./models/item");
 
@@ -23,6 +24,9 @@ app.use(cors());
 
 // define port
 const port = 3000;
+
+// used to parse JSON body
+app.use(express.json());
 
 // load static files from client/build
 app.use(express.static(path.join(__dirname, "client", "build")));
@@ -54,6 +58,13 @@ app.get("/api/categories", (req, res, next) => {
   });
 });
 
+app.post("/api/create", [
+  (req, res, next) => {
+    console.log(req.body);
+    res.send("success");
+  },
+]);
+
 // 404 responses are not captured by express middleware
 // create 404 error and forward to error handler with next()
 app.use((req, res, next) => {
@@ -64,9 +75,12 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-  err.status === 404
-    ? res.status(404).send("Resource not found.")
-    : res.status(500).send("An unknown error occured.");
+  if (err.status === 404) {
+    res.status(404).send("Resource not found.");
+  } else {
+    console.log(err);
+    res.status(500).send("An unknown error occured.");
+  }
 });
 
 // listen for requests at the specified port (with callback on start listening)

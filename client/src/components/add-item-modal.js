@@ -25,9 +25,25 @@ export const AddItemModal = (props) => {
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
+  const postForm = async (name, description, category, price, quantity) => {
+    try {
+      const response = await fetch(`${props.server}/api/create`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, description, category, price, quantity }),
+      });
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(name, description, category, price, quantity);
+    postForm(name, description, category, price, quantity);
   };
 
   return (

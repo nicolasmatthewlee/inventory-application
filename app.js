@@ -39,10 +39,18 @@ app.get("/", (req, res) => {
 // next() function
 // ex) if (err) next(err)
 app.get("/api", (req, res, next) => {
-  Item.find({}, { __v: 0 }).exec((err, items) => {
+  Item.find({}, { __v: 0 }).exec((err, result) => {
     if (err) return next(err);
     // no error
-    res.send(items);
+    res.send(result);
+  });
+});
+
+app.get("/api/categories", (req, res, next) => {
+  Item.distinct("category").exec((err, result) => {
+    if (err) return next(err);
+    // no error
+    res.send(result);
   });
 });
 

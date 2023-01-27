@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import { AddItemModal } from "./components/add-item-modal";
 
 const App = () => {
+  const server = "http://localhost:3000";
+
   const [items, setItems] = useState([]);
   const loadItems = async () => {
     try {
-      const itemsData = await fetch("http://localhost:3000/api");
+      const itemsData = await fetch(`${server}/api`);
       const itemsJSON = await itemsData.json();
       setItems(itemsJSON);
     } catch (err) {
@@ -36,7 +38,10 @@ const App = () => {
             onClick={() => setShowItemModal(false)}
             className="zindex-modal-backdrop w-100 h-100 bg-dark opacity-50 position-fixed"
           ></div>
-          <AddItemModal onClose={() => setShowItemModal(false)} />
+          <AddItemModal
+            server={server}
+            onClose={() => setShowItemModal(false)}
+          />
         </div>
       ) : null}
 

@@ -1,6 +1,23 @@
+import { useEffect, useState } from "react";
 import CLOSE_ICON from "../assets/close.svg";
 
 export const AddItemModal = (props) => {
+  const [categories, setCategories] = useState([]);
+
+  // get categories for select
+  const getCategories = async () => {
+    try {
+      const categoriesData = await fetch(`${props.server}/api/categories`);
+      const categoriesJSON = await categoriesData.json();
+      setCategories(categoriesJSON);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   return (
     <div
       className="position-fixed top-0 w-100 zindex-modal d-flex justify-content-center"
@@ -36,7 +53,11 @@ export const AddItemModal = (props) => {
             </div>
             <div className="mb-2">
               <label className="form-label mb-1">Category</label>
-              <select name="" id="" className="form-select"></select>
+              <select name="" id="" className="form-select">
+                {categories.map((c) => (
+                  <option key={c}>{c}</option>
+                ))}
+              </select>
             </div>
             <div className="row mb-3">
               <div className="col-6">

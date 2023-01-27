@@ -4,7 +4,7 @@ import "bootstrap";
 
 import { useEffect, useState } from "react";
 
-import { AddItemModal } from "./components/add-item-modal";
+import { ItemModal } from "./components/item-modal";
 
 const App = () => {
   const server = "http://localhost:3000";
@@ -38,7 +38,7 @@ const App = () => {
             onClick={() => setShowItemModal(false)}
             className="zindex-modal-backdrop w-100 h-100 bg-dark opacity-50 position-fixed"
           ></div>
-          <AddItemModal
+          <ItemModal
             server={server}
             onClose={() => setShowItemModal(false)}
             onSave={loadItems}

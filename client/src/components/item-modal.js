@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import CLOSE_ICON from "../assets/close.svg";
 import uniqid from "uniqid";
 
-export const AddItemModal = (props) => {
+export const ItemModal = (props) => {
   const [categories, setCategories] = useState([]);
 
   // get categories for select

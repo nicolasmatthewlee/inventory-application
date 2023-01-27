@@ -64,7 +64,7 @@ const App = () => {
 
       <div className="container-fluid">
         {items.length > 0 ? (
-          <table className="table table-striped table-bordered table-hover m-0 bg-white shadow-sm">
+          <table className="table table-striped table-bordered table-hover m-0 bg-white shadow-sm mb-3">
             <thead>
               <tr>
                 {Object.keys(items[0]).map((n) =>

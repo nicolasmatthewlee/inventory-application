@@ -23,7 +23,7 @@ export const AddItemModal = (props) => {
       className="position-fixed top-0 w-100 zindex-modal d-flex justify-content-center"
       style={{ marginTop: "100px" }}
     >
-      <div className="card col-10">
+      <div className="card col-10" style={{ maxWidth: "400px" }}>
         <div className="card-body p-3">
           <div className="row">
             <div className="col">

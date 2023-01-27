@@ -5,19 +5,29 @@ import uniqid from "uniqid";
 export const ItemModal = (props) => {
   const [categories, setCategories] = useState([]);
 
-  // get categories for select
-  const getCategories = async () => {
-    try {
-      const categoriesData = await fetch(`${props.server}/api/categories`);
-      const categoriesJSON = await categoriesData.json();
-      setCategories(categoriesJSON);
-      setCategory(categoriesJSON[0]);
-    } catch (err) {
-      console.log(err);
+  // if add get categories; else fetch all data for given _id
+  const fetchData = async () => {
+    if (props.mode === "add") {
+      try {
+        const categoriesData = await fetch(`${props.server}/api/categories`);
+        const categoriesJSON = await categoriesData.json();
+        setCategories(categoriesJSON);
+        setCategory(categoriesJSON[0]);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      try {
+        const itemData = await fetch(`${props.server}/item/${props.item}`);
+        const itemJSON = await itemData.json();
+        console.log(itemJSON);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   useEffect(() => {
-    getCategories();
+    fetchData();
   }, []);
 
   const [name, setName] = useState("");
@@ -71,7 +81,13 @@ export const ItemModal = (props) => {
           <div className="row">
             <div className="col">
               <h2>
-                <i className="bi-database-fill-add"></i> Add item
+                {props.mode === "add" ? (
+                  <i className="bi-database-fill-add"></i>
+                ) : (
+                  <i className="bi-database-fill-check"> </i>
+                )}
+                {" " + props.mode.charAt(0).toUpperCase() + props.mode.slice(1)}{" "}
+                item
               </h2>
             </div>
             <div className="col-auto p-0">

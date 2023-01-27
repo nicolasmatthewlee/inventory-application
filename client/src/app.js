@@ -23,10 +23,14 @@ const App = () => {
     loadItems();
   }, []);
 
+  const [modalMode, setModalMode] = useState("add");
   const [showItemModal, setShowItemModal] = useState(false);
+  const [activeItem, setActiveItem] = useState("");
 
   const goToItem = (id) => {
-    console.log(id);
+    setModalMode("update");
+    setActiveItem(id);
+    setShowItemModal(true);
   };
 
   return (
@@ -42,6 +46,8 @@ const App = () => {
             server={server}
             onClose={() => setShowItemModal(false)}
             onSave={loadItems}
+            mode={modalMode}
+            item={activeItem}
           />
         </div>
       ) : null}
@@ -54,7 +60,10 @@ const App = () => {
           <div className="col-auto">
             <button
               className="btn btn-dark"
-              onClick={() => setShowItemModal(true)}
+              onClick={() => {
+                setModalMode("add");
+                setShowItemModal(true);
+              }}
             >
               <i className="bi-plus-lg"></i> New Item
             </button>

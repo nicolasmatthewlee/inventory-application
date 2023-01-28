@@ -182,7 +182,13 @@ export const ItemModal = (props) => {
                   setCategory(e.target.value);
                   evaluateCategory(e.target.value);
                 }}
-                defaultValue={category}
+                value={
+                  showNewCategoryInput
+                    ? "add new category"
+                    : category
+                    ? category
+                    : ""
+                }
               >
                 {categories.map((c) => (
                   <option key={c}>{c}</option>

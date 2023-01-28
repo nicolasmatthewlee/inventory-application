@@ -5,22 +5,27 @@ import uniqid from "uniqid";
 export const ItemModal = (props) => {
   const [categories, setCategories] = useState([]);
 
-  // if add get categories; else fetch all data for given _id
+  // get categories, if 'update' also fetch all data for given _id
   const fetchData = async () => {
-    if (props.mode === "add") {
-      try {
-        const categoriesData = await fetch(`${props.server}/api/categories`);
-        const categoriesJSON = await categoriesData.json();
-        setCategories(categoriesJSON);
-        setCategory(categoriesJSON[0]);
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
+    try {
+      const categoriesData = await fetch(`${props.server}/api/categories`);
+      const categoriesJSON = await categoriesData.json();
+      setCategories(categoriesJSON);
+      setCategory(categoriesJSON[0]);
+    } catch (err) {
+      console.log(err);
+    }
+
+    if (props.mode === "update") {
       try {
         const itemData = await fetch(`${props.server}/api/item/${props.item}`);
         const itemJSON = await itemData.json();
-        console.log(itemJSON);
+        setName(itemJSON.name);
+        setDescription(itemJSON.description);
+        setCategory(itemJSON.category);
+        setPrice(itemJSON.price);
+        setQuantity(itemJSON.count);
+        setId(itemJSON._id);
       } catch (err) {
         console.log(err);
       }
@@ -35,11 +40,12 @@ export const ItemModal = (props) => {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [id, setId] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
 
-  const postForm = async (name, description, category, price, quantity) => {
+  const postForm = async (name, description, category, price, quantity, id) => {
     setLoading(true);
     try {
       const response = await fetch(`${props.server}/api/create`, {
@@ -48,7 +54,14 @@ export const ItemModal = (props) => {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, description, category, price, quantity }),
+        body: JSON.stringify({
+          name,
+          description,
+          category,
+          price,
+          quantity,
+          id,
+        }),
       });
       const responseJSON = await response.json();
 
@@ -68,7 +81,7 @@ export const ItemModal = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    postForm(name, description, category, price, quantity);
+    postForm(name, description, category, price, quantity, id);
   };
 
   return (
@@ -110,6 +123,7 @@ export const ItemModal = (props) => {
                 placeholder="Name"
                 required
                 onChange={(e) => setName(e.target.value)}
+                value={name}
               />
             </div>
             <div className="mb-2">
@@ -123,6 +137,7 @@ export const ItemModal = (props) => {
                 className="form-control"
                 placeholder="Item description..."
                 onChange={(e) => setDescription(e.target.value)}
+                value={description}
               />
             </div>
             <div className="mb-2">
@@ -134,6 +149,7 @@ export const ItemModal = (props) => {
                 className="form-select"
                 required
                 onChange={(e) => setCategory(e.target.value)}
+                defaultValue={category}
               >
                 {categories.map((c) => (
                   <option key={c}>{c}</option>
@@ -158,6 +174,7 @@ export const ItemModal = (props) => {
                       style={{
                         MozAppearance: "textfield",
                       }}
+                      value={price}
                     />
                   </div>
                 </div>
@@ -174,6 +191,7 @@ export const ItemModal = (props) => {
                     placeholder="1"
                     onChange={(e) => setQuantity(e.target.value)}
                     min="0"
+                    value={quantity}
                   />
                 </div>
               </div>

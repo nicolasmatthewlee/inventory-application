@@ -108,19 +108,37 @@ app.post("/api/create", [
     // no validation errors
 
     // save to collection
-    const item = new Item({
-      name: req.body.name,
-      description: req.body.description,
-      category: req.body.category,
-      price: req.body.price,
-      count: req.body.quantity,
-    });
+    // if id is not null, update
+    if (req.body.id) {
+      const item = new Item({
+        name: req.body.name,
+        description: req.body.description,
+        category: req.body.category,
+        price: req.body.price,
+        count: req.body.quantity,
+        _id: req.body.id,
+      });
 
-    item.save((err) => {
-      if (err) return res.json({ success: false, err: [err] });
-      // saved
-      res.json({ success: true });
-    });
+      Item.findByIdAndUpdate(req.body.id, item, {}, (err, theItem) => {
+        if (err) return next(err);
+        // updated
+        res.json({ success: true });
+      });
+    } else {
+      const item = new Item({
+        name: req.body.name,
+        description: req.body.description,
+        category: req.body.category,
+        price: req.body.price,
+        count: req.body.quantity,
+      });
+
+      item.save((err) => {
+        if (err) return res.json({ success: false, err: [err] });
+        // saved
+        res.json({ success: true });
+      });
+    }
   },
 ]);
 

@@ -82,7 +82,7 @@ export const ItemModal = (props) => {
       if (responseJSON.success === true) {
         props.onClose();
         props.onSave();
-      } else throw Error;
+      }
     } catch (err) {
       setErrors([{ msg: "An unknown error occured." }]);
     }

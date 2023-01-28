@@ -43,6 +43,7 @@ export const ItemModal = (props) => {
   const [id, setId] = useState(null);
 
   const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const postForm = async (name, description, category, price, quantity, id) => {
@@ -85,7 +86,23 @@ export const ItemModal = (props) => {
   };
 
   const onDelete = (e) => {
-    console.log(id);
+    const postDelete = async () => {
+      setDeleteLoading(true);
+      try {
+        const response = await fetch(`${props.server}/api/item/${id}/delete`, {
+          method: "POST",
+        });
+        const responseJSON = await response.json();
+        if (responseJSON.success === true) {
+          props.onClose();
+          props.onSave();
+        } else throw Error;
+      } catch (err) {
+        console.log(err);
+      }
+      setDeleteLoading(false);
+    };
+    postDelete();
   };
 
   return (
@@ -244,7 +261,7 @@ export const ItemModal = (props) => {
           </form>
           {props.mode === "update" ? (
             <button onClick={onDelete} className="btn btn-danger w-100 mt-3">
-              {loading ? (
+              {deleteLoading ? (
                 <div>
                   <i className="spinner-border spinner-border-sm"></i>{" "}
                   Loading...

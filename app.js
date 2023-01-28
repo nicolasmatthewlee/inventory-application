@@ -142,6 +142,14 @@ app.post("/api/create", [
   },
 ]);
 
+app.post("/api/item/:id/delete", (req, res, next) => {
+  Item.findByIdAndDelete(req.params.id, (err, result) => {
+    if (err) return next(err);
+    // deleted
+    res.json({ success: true });
+  });
+});
+
 // 404 responses are not captured by express middleware
 // create 404 error and forward to error handler with next()
 app.use((req, res, next) => {

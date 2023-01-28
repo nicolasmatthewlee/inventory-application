@@ -59,7 +59,7 @@ const App = () => {
           </div>
           <div className="col-auto">
             <button
-              className="btn btn-dark"
+              className="btn btn-success"
               onClick={() => {
                 setModalMode("add");
                 setShowItemModal(true);

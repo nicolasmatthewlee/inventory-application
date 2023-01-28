@@ -100,7 +100,7 @@ export const ItemModal = (props) => {
                   <i className="bi-database-fill-check"> </i>
                 )}
                 {" " + props.mode.charAt(0).toUpperCase() + props.mode.slice(1)}{" "}
-                item
+                Item
               </h2>
             </div>
             <div className="col-auto p-0">
@@ -211,16 +211,29 @@ export const ItemModal = (props) => {
               </div>
             ) : null}
 
-            <button type="submit" className="btn btn-dark w-100">
-              {loading ? (
-                <div>
-                  <i className="spinner-border spinner-border-sm"></i>{" "}
-                  Loading...
-                </div>
-              ) : (
-                "Submit"
-              )}
-            </button>
+            {props.mode === "add" ? (
+              <button type="submit" className="btn btn-success w-100">
+                {loading ? (
+                  <div>
+                    <i className="spinner-border spinner-border-sm"></i>{" "}
+                    Loading...
+                  </div>
+                ) : (
+                  "Add"
+                )}
+              </button>
+            ) : (
+              <button type="submit" className="btn btn-warning w-100">
+                {loading ? (
+                  <div>
+                    <i className="spinner-border spinner-border-sm"></i>{" "}
+                    Loading...
+                  </div>
+                ) : (
+                  "Update"
+                )}
+              </button>
+            )}
           </form>
         </div>
       </div>

@@ -84,6 +84,10 @@ export const ItemModal = (props) => {
     postForm(name, description, category, price, quantity, id);
   };
 
+  const onDelete = (e) => {
+    console.log(id);
+  };
+
   return (
     <div
       className="position-fixed top-0 w-100 zindex-modal d-flex justify-content-center"
@@ -223,7 +227,10 @@ export const ItemModal = (props) => {
                 )}
               </button>
             ) : (
-              <button type="submit" className="btn btn-warning w-100">
+              <button
+                type="submit"
+                className="btn btn-warning w-100 text-white"
+              >
                 {loading ? (
                   <div>
                     <i className="spinner-border spinner-border-sm"></i>{" "}
@@ -235,6 +242,18 @@ export const ItemModal = (props) => {
               </button>
             )}
           </form>
+          {props.mode === "update" ? (
+            <button onClick={onDelete} className="btn btn-danger w-100 mt-3">
+              {loading ? (
+                <div>
+                  <i className="spinner-border spinner-border-sm"></i>{" "}
+                  Loading...
+                </div>
+              ) : (
+                "Delete"
+              )}
+            </button>
+          ) : null}
         </div>
       </div>
     </div>

@@ -37,10 +37,19 @@ export const ItemModal = (props) => {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(null);
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [id, setId] = useState(null);
+
+  const [showNewCategoryInput, setShowNewCategoryInput] = useState(false);
+
+  const evaluateCategory = (value) => {
+    if (value === "add new category") {
+      setCategory("");
+      setShowNewCategoryInput(true);
+    } else setShowNewCategoryInput(false);
+  };
 
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -169,14 +178,36 @@ export const ItemModal = (props) => {
                 id="category"
                 className="form-select"
                 required
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                  evaluateCategory(e.target.value);
+                }}
                 defaultValue={category}
               >
                 {categories.map((c) => (
                   <option key={c}>{c}</option>
                 ))}
+                {category === null ? null : <option>add new category</option>}
               </select>
             </div>
+
+            {showNewCategoryInput ? (
+              <div className="mb-2">
+                {/* htmlFor corresponds the id of the input */}
+                <label htmlFor="new-category" className="form-label mb-1">
+                  New Category
+                </label>
+                <input
+                  type="text"
+                  id="new-category"
+                  className="form-control"
+                  placeholder="Category"
+                  required
+                  onChange={(e) => setCategory(e.target.value)}
+                />
+              </div>
+            ) : null}
+
             <div className="row mb-3">
               <div className="col-6">
                 <div>

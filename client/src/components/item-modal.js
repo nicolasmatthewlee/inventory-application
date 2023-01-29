@@ -5,8 +5,11 @@ import uniqid from "uniqid";
 export const ItemModal = (props) => {
   const [categories, setCategories] = useState([]);
 
+  const [isFetchingData, setIsFetchingData] = useState(true);
+
   // get categories, if 'update' also fetch all data for given _id
   const fetchData = async () => {
+    setIsFetchingData(true);
     try {
       const categoriesData = await fetch(`${props.server}/api/categories`);
       const categoriesJSON = await categoriesData.json();
@@ -30,6 +33,7 @@ export const ItemModal = (props) => {
         console.log(err);
       }
     }
+    setIsFetchingData(false);
   };
   useEffect(() => {
     fetchData();
@@ -146,160 +150,167 @@ export const ItemModal = (props) => {
           </div>
         </div>
 
-        <form onSubmit={onSubmit}>
-          <div className="mb-2">
-            {/* htmlFor corresponds the id of the input */}
-            <label htmlFor="name" className="form-label mb-1">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="form-control"
-              placeholder="Name"
-              required
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-            />
+        {isFetchingData ? (
+          <div className="d-flex align-items-center justify-content-center gap-2 mt-1">
+            <div className="spinner-border spinner-border-sm text-success"></div>
+            <h5 className="m-0">Loading...</h5>
           </div>
-          <div className="mb-2">
-            <label htmlFor="description" className="form-label mb-1">
-              Description
-            </label>
-            <textarea
-              type="text"
-              id="description"
-              rows="3"
-              className="form-control"
-              placeholder="Item description..."
-              onChange={(e) => setDescription(e.target.value)}
-              value={description}
-            />
-          </div>
-          <div className="mb-2">
-            <label htmlFor="category" className="form-label mb-1">
-              Category
-            </label>
-            <select
-              id="category"
-              className="form-select"
-              required
-              onChange={(e) => {
-                setCategory(e.target.value);
-                evaluateCategory(e.target.value);
-              }}
-              value={
-                showNewCategoryInput
-                  ? "add new category"
-                  : category
-                  ? category
-                  : ""
-              }
-            >
-              {categories.map((c) => (
-                <option key={c}>{c}</option>
-              ))}
-              {category === null ? null : <option>add new category</option>}
-            </select>
-          </div>
-
-          {showNewCategoryInput ? (
+        ) : (
+          <form onSubmit={onSubmit}>
             <div className="mb-2">
               {/* htmlFor corresponds the id of the input */}
-              <label htmlFor="new-category" className="form-label mb-1">
-                New Category
+              <label htmlFor="name" className="form-label mb-1">
+                Name
               </label>
               <input
                 type="text"
-                id="new-category"
+                id="name"
                 className="form-control"
-                placeholder="Category"
+                placeholder="Name"
                 required
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
+                value={name}
               />
             </div>
-          ) : null}
+            <div className="mb-2">
+              <label htmlFor="description" className="form-label mb-1">
+                Description
+              </label>
+              <textarea
+                type="text"
+                id="description"
+                rows="3"
+                className="form-control"
+                placeholder="Item description..."
+                onChange={(e) => setDescription(e.target.value)}
+                value={description}
+              />
+            </div>
+            <div className="mb-2">
+              <label htmlFor="category" className="form-label mb-1">
+                Category
+              </label>
+              <select
+                id="category"
+                className="form-select"
+                required
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                  evaluateCategory(e.target.value);
+                }}
+                value={
+                  showNewCategoryInput
+                    ? "add new category"
+                    : category
+                    ? category
+                    : ""
+                }
+              >
+                {categories.map((c) => (
+                  <option key={c}>{c}</option>
+                ))}
+                {category === null ? null : <option>add new category</option>}
+              </select>
+            </div>
 
-          <div className="row mb-3">
-            <div className="col-6">
-              <div>
-                <label htmlFor="price" className="form-label mb-1">
-                  Price
+            {showNewCategoryInput ? (
+              <div className="mb-2">
+                {/* htmlFor corresponds the id of the input */}
+                <label htmlFor="new-category" className="form-label mb-1">
+                  New Category
                 </label>
-                <div className="input-group">
-                  <div className="input-group-text">$</div>
+                <input
+                  type="text"
+                  id="new-category"
+                  className="form-control"
+                  placeholder="Category"
+                  required
+                  onChange={(e) => setCategory(e.target.value)}
+                />
+              </div>
+            ) : null}
+
+            <div className="row mb-3">
+              <div className="col-6">
+                <div>
+                  <label htmlFor="price" className="form-label mb-1">
+                    Price
+                  </label>
+                  <div className="input-group">
+                    <div className="input-group-text">$</div>
+                    <input
+                      type="number"
+                      id="price"
+                      className="form-control"
+                      placeholder="0.00"
+                      onChange={(e) => setPrice(e.target.value)}
+                      min="0"
+                      style={{
+                        MozAppearance: "textfield",
+                      }}
+                      value={price}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-6">
+                <div>
+                  <label htmlFor="quantity" className="form-label mb-1">
+                    Quantity
+                  </label>
                   <input
                     type="number"
-                    id="price"
+                    id="quantity"
                     className="form-control"
-                    placeholder="0.00"
-                    onChange={(e) => setPrice(e.target.value)}
+                    placeholder="1"
+                    onChange={(e) => setQuantity(e.target.value)}
                     min="0"
-                    style={{
-                      MozAppearance: "textfield",
-                    }}
-                    value={price}
+                    value={quantity}
                   />
                 </div>
               </div>
             </div>
-            <div className="col-6">
-              <div>
-                <label htmlFor="quantity" className="form-label mb-1">
-                  Quantity
-                </label>
-                <input
-                  type="number"
-                  id="quantity"
-                  className="form-control"
-                  placeholder="1"
-                  onChange={(e) => setQuantity(e.target.value)}
-                  min="0"
-                  value={quantity}
-                />
+
+            {errors.length > 0 ? (
+              <div className="container-fluid list-group p-0  mb-3">
+                <li className="list-group-item list-group-item-danger m-0">
+                  <ul className="m-0 ps-3">
+                    {errors.map((e) => (
+                      <li className="" key={uniqid()}>
+                        {e.msg}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
               </div>
-            </div>
-          </div>
+            ) : null}
 
-          {errors.length > 0 ? (
-            <div className="container-fluid list-group p-0  mb-3">
-              <li className="list-group-item list-group-item-danger m-0">
-                <ul className="m-0 ps-3">
-                  {errors.map((e) => (
-                    <li className="" key={uniqid()}>
-                      {e.msg}
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            </div>
-          ) : null}
-
-          {props.mode === "add" ? (
-            <button type="submit" className="btn btn-success w-100">
-              {loading ? (
-                <div>
-                  <i className="spinner-border spinner-border-sm"></i>{" "}
-                  Loading...
-                </div>
-              ) : (
-                "Add"
-              )}
-            </button>
-          ) : (
-            <button type="submit" className="btn btn-success w-100">
-              {loading ? (
-                <div>
-                  <i className="spinner-border spinner-border-sm"></i>{" "}
-                  Loading...
-                </div>
-              ) : (
-                "Update"
-              )}
-            </button>
-          )}
-        </form>
-        {props.mode === "update" ? (
+            {props.mode === "add" ? (
+              <button type="submit" className="btn btn-success w-100">
+                {loading ? (
+                  <div>
+                    <i className="spinner-border spinner-border-sm"></i>{" "}
+                    Loading...
+                  </div>
+                ) : (
+                  "Add"
+                )}
+              </button>
+            ) : (
+              <button type="submit" className="btn btn-success w-100">
+                {loading ? (
+                  <div>
+                    <i className="spinner-border spinner-border-sm"></i>{" "}
+                    Loading...
+                  </div>
+                ) : (
+                  "Update"
+                )}
+              </button>
+            )}
+          </form>
+        )}
+        {props.mode === "update" && !isFetchingData ? (
           <button onClick={onDelete} className="btn btn-danger w-100 mt-3">
             {deleteLoading ? (
               <div>

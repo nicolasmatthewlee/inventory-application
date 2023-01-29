@@ -9,15 +9,21 @@ import { ItemModal } from "./components/item-modal";
 const App = () => {
   const server = "http://localhost:3000";
 
+  const [isFetchingData, setIsFetchingData] = useState(true);
+  const [dataAccessed, setDataAccessed] = useState(false);
+
   const [items, setItems] = useState([]);
   const loadItems = async () => {
+    setIsFetchingData(true);
     try {
       const itemsData = await fetch(`${server}/api`);
       const itemsJSON = await itemsData.json();
       setItems(itemsJSON);
+      setDataAccessed(true);
     } catch (err) {
-      console.log(err);
+      setDataAccessed(false);
     }
+    setIsFetchingData(false);
   };
   useEffect(() => {
     loadItems();
@@ -74,7 +80,16 @@ const App = () => {
       </div>
 
       <div className="container-fluid">
-        {items.length > 0 ? (
+        {isFetchingData ? (
+          <div className="d-flex align-items-center justify-content-center gap-2 pb-3">
+            <div className="spinner-border spinner-border-sm text-success"></div>
+            <h5 className="m-0">Loading...</h5>
+          </div>
+        ) : !dataAccessed ? (
+          <div className="d-flex align-items-center justify-content-center gap-2 pb-3">
+            <h5 className="m-0">An error occurred. Please try again.</h5>
+          </div>
+        ) : (
           <table className="table table-striped table-bordered table-hover m-0 bg-white shadow-sm mb-3">
             <thead>
               <tr>
@@ -93,11 +108,6 @@ const App = () => {
               ))}
             </tbody>
           </table>
-        ) : (
-          <div className="d-flex align-items-center justify-content-center gap-2 pb-3">
-            <div className="spinner-border spinner-border-sm text-success"></div>
-            <h5 className="m-0">Loading...</h5>
-          </div>
         )}
       </div>
     </div>

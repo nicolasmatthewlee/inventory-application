@@ -117,7 +117,14 @@ export const ItemModal = (props) => {
   return (
     <div
       className="position-fixed card col-10"
-      style={{ maxWidth: "400px", marginTop: "100px", left: "25%" }}
+      style={{
+        maxWidth: "400px",
+        top: "10%",
+        left: "50%",
+        transform: "translateX(-50%)",
+        maxHeight: "80%",
+        overflow: "scroll",
+      }}
     >
       <div className="card-body p-3">
         <div className="row">

@@ -55,7 +55,9 @@ const App = () => {
       <div className="container-fluid bg-light shadow-sm mb-3 p-3">
         <div className="row align-items-center">
           <div className="col">
-            <h1>Inventory</h1>
+            <h1>
+              <i className="bi-box-seam-fill me-2"></i>Inventory
+            </h1>
           </div>
           <div className="col-auto">
             <button

@@ -77,7 +77,7 @@ app.post("/api/create", [
   body("description")
     .trim()
     .isLength({ max: 500 })
-    .withMessage("Description must not exceed 100 characters.")
+    .withMessage("Description must not exceed 500 characters.")
     .escape(),
   body("category")
     .trim()

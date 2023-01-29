@@ -93,7 +93,12 @@ const App = () => {
               ))}
             </tbody>
           </table>
-        ) : null}
+        ) : (
+          <div className="d-flex align-items-center justify-content-center gap-2 pb-3">
+            <div className="spinner-border spinner-border-sm text-success"></div>
+            <h5 className="m-0">Loading...</h5>
+          </div>
+        )}
       </div>
     </div>
   );

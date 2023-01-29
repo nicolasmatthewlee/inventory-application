@@ -15,6 +15,10 @@ export const ItemModal = (props) => {
       const categoriesJSON = await categoriesData.json();
       setCategories(categoriesJSON);
       setCategory(categoriesJSON[0]);
+      if (categoriesJSON[0] === undefined) {
+        setCategory("add new category");
+        evaluateCategory("add new category");
+      }
     } catch (err) {
       console.log(err);
     }

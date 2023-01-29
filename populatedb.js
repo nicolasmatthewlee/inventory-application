@@ -63,14 +63,14 @@ const items = [
     description: "20th century woodblock print by Hasui Kawase.",
     category: "japanese",
     price: 80,
-    count: 2,
+    count: 1,
   },
   {
     name: "Meguro Fudō Temple",
     description: "20th century woodblock print by Hasui Kawase.",
     category: "japanese",
     price: 30,
-    count: 2,
+    count: 3,
   },
   {
     name: " Snow in the Front of the Shrine",
@@ -84,14 +84,14 @@ const items = [
     description: "20th century woodblock print by Hasui Kawase.",
     category: "japanese",
     price: 100,
-    count: 2,
+    count: 1,
   },
   {
     name: "Chūzenji, Utagahama",
     description: "20th century woodblock print by Hasui Kawase.",
     category: "japanese",
     price: 110,
-    count: 2,
+    count: 3,
   },
   {
     name: "Morning at Cape Inubō",
@@ -109,11 +109,32 @@ const items = [
     count: 2,
   },
   {
-    name: " Snow at Sekiguchi",
+    name: "Snow at Sekiguchi",
     description: "20th century woodblock print by Hasui Kawase.",
     category: "japanese",
     price: 80,
+    count: 4,
+  },
+  {
+    name: "Girl at Sewing Machine",
+    description: "20th century painting by Edward Hopper.",
+    category: "american",
+    price: 80,
     count: 2,
+  },
+  {
+    name: "Gas",
+    description: "20th century painting by Edward Hopper.",
+    category: "american",
+    price: 120,
+    count: 1,
+  },
+  {
+    name: "Office at Night",
+    description: "20th century painting by Edward Hopper.",
+    category: "american",
+    price: 90,
+    count: 3,
   },
 ];
 

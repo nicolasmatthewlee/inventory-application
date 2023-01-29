@@ -89,7 +89,7 @@ const App = () => {
           <div className="d-flex align-items-center justify-content-center gap-2 pb-3">
             <h5 className="m-0">An error occurred. Please try again.</h5>
           </div>
-        ) : (
+        ) : items.length > 0 ? (
           <table className="table table-striped table-bordered table-hover m-0 bg-white shadow-sm mb-3">
             <thead>
               <tr>
@@ -108,6 +108,10 @@ const App = () => {
               ))}
             </tbody>
           </table>
+        ) : (
+          <div className="d-flex align-items-center justify-content-center gap-2 pb-3">
+            <h5 className="m-0">No data found.</h5>
+          </div>
         )}
       </div>
     </div>
